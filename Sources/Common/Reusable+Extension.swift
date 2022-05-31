@@ -6,13 +6,12 @@
 //
 //
 import UIKit
-import Foundation
 
 public protocol Reuseable: AnyObject {
     static var reuseIdentifier: String { get }
 }
 
-extension Reuseable {
+public extension Reuseable {
     static var reuseIdentifier: String {
         return String(describing: self)
     }
