@@ -8,7 +8,7 @@
 import UIKit
 import Foundation
 
-protocol Reuseable: AnyObject {
+public protocol Reuseable: AnyObject {
     static var reuseIdentifier: String { get }
 }
 
@@ -18,7 +18,7 @@ extension Reuseable {
     }
 }
 
-extension UICollectionView {
+public extension UICollectionView {
     func registerCell<T: UICollectionViewCell>(type: T.Type) where T: Reuseable {
         self.register(UINib(nibName: T.reuseIdentifier, bundle: nil), forCellWithReuseIdentifier: T.reuseIdentifier)
     }
@@ -28,7 +28,7 @@ extension UICollectionView {
     }
 }
 
-extension UITableView {
+public extension UITableView {
     func registerCell<T: UITableViewCell>(type: T.Type) where T: Reuseable {
         self.register(UINib(nibName: T.reuseIdentifier, bundle: nil), forCellReuseIdentifier: T.reuseIdentifier)
     }
