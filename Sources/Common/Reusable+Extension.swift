@@ -8,8 +8,8 @@
 import UIKit
 
 public enum UICollectionViewSupplementaryKind: String{
-    case elementKindSectionFooter
-    case elementKindSectionHeader
+    case elementKindSectionFooter = "UICollectionElementKindSectionFooter"
+    case elementKindSectionHeader = "UICollectionElementKindSectionHeader"
 }
 
 public protocol Reuseable: AnyObject {
@@ -17,6 +17,12 @@ public protocol Reuseable: AnyObject {
 }
 
 public extension Reuseable {
+    static var reuseIdentifier: String {
+        return String(describing: self)
+    }
+}
+
+public extension UICollectionReusableView {
     static var reuseIdentifier: String {
         return String(describing: self)
     }
@@ -31,9 +37,11 @@ public extension UICollectionView {
         return dequeueReusableCell(withReuseIdentifier: T.reuseIdentifier, for: indexPath as IndexPath) as! T
     }
     
-    func registerSupplementaryView<T: UICollectionViewCell>(type: T.Type, kind: UICollectionViewSupplementaryKind) where T: Reuseable {
+    func registerSupplementaryView<T: UICollectionReusableView>(type: T.Type, kind: UICollectionViewSupplementaryKind) where T: UICollectionReusableView {
         self.register(UINib(nibName: T.reuseIdentifier, bundle: Bundle(for: T.self)), forSupplementaryViewOfKind: kind.rawValue, withReuseIdentifier: T.reuseIdentifier)
     }
+    
+
 }
 
 public extension UITableView {
